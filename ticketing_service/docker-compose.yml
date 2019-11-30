@@ -3,4 +3,6 @@ services:
   web:
     build: .
     image: kmjayadeep/watermark-ticketing-service
+    ports:
+      - "3000:3000"
 
