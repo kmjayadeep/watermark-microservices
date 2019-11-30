@@ -8,7 +8,7 @@ app.use(cors());
 app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
-    res.send('An alligator approaches!');
+    res.send('watermark ticketing service');
 });
 
 app.listen(PORT, () => console.log(`Ticketing service app listening on port ${PORT}!`));
