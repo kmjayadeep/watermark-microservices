@@ -34,14 +34,15 @@ gcloud beta container clusters create $CLUSTER_NAME \
   --scopes cloud-platform
 ```
 
-* Install Knative serving
+* Install Knative serving and Eventing
 
 ```
 kubectl apply --selector knative.dev/crd-install=true \
-   --filename https://github.com/knative/serving/releases/download/v0.10.0/serving.yaml
+   --filename https://github.com/knative/serving/releases/download/v0.10.0/serving.yaml \
+   --filename https://github.com/knative/eventing/releases/download/v0.10.0/release.yaml
 
-kubectl apply --filename https://github.com/knative/serving/releases/download/v0.10.0/serving.yaml
-
+kubectl apply --filename https://github.com/knative/serving/releases/download/v0.10.0/serving.yaml \
+   --filename https://github.com/knative/eventing/releases/download/v0.10.0/release.yaml
 ```
 
 * Export google service acount credentials in json and convert into base64. Edit google-cloud-key-secret.yaml and replace `<KEY HERE IN BASE64>`
@@ -62,6 +63,20 @@ Replace the IP in `config-domain.yaml` file and apply the config
 
 ```
 kubectl apply -f config-domain.yaml
+```
+
+* Eventing setup
+
+Enable eventing injection in default namespace
+
+```
+kubectl label namespace default knative-eventing-injection=enabled
+```
+
+Verify with following command
+
+```
+kubectl get Broker default
 ```
 
 
