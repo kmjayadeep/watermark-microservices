@@ -1,8 +1,22 @@
 # Watermarking service
 
+A microservices based prject to watermark a document asynchronously.
+
+## Architecture
+
+![Image of Yaktocat](assets/architecture.png)
+
+## Tech stack
+
+1. Kubernetes (GKE)
+2. Knative serving and eventing
+3. PubSub
+4. Nodejs, ExpressJS, Mongodb, GraphQL
+5. grpc
+
 ## Knative setup
 
-* Create gcloud cluster or n1-standard-1 with 1-5 nodes with istio setup
+* Create gcloud cluster :- n1-standard-1 VM 1-5 nodes with istio setup
 
 ```
 export CLUSTER_NAME=knative
@@ -30,7 +44,7 @@ kubectl apply --filename https://github.com/knative/serving/releases/download/v0
 
 ```
 
-* export google service acount credentials in json and convert into base64. Edit google-cloud-key-secret.yaml and replace `<KEY HERE IN BASE64>`
+* Export google service acount credentials in json and convert into base64. Edit google-cloud-key-secret.yaml and replace `<KEY HERE IN BASE64>`
 
 ```
 kubectl apply -f google-cloud-key-secret.yaml
