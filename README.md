@@ -50,7 +50,22 @@ kubectl apply --filename https://github.com/knative/serving/releases/download/v0
 kubectl apply -f google-cloud-key-secret.yaml
 ```
 
-### Services
+* Config Domain
+
+Get external IP address from the following command
+
+```
+kubectl get svc istio-ingressgateway -n istio-system -o jsonpath="{.status.loadBalancer.ingress[0].ip}"
+```
+
+Replace the IP in `config-domain.yaml` file and apply the config
+
+```
+kubectl apply -f config-domain.yaml
+```
+
+
+### Setting up Services
 
 * Ticketing service
 
