@@ -7,7 +7,7 @@ async function publishEvent(topicName, data) {
   try {
     await pubsub.createTopic(topicName)
   } catch (error) {
-    console.log(error);
+    console.log('unable to create topic, likely that topic already exists');
   }
 
   const dataBuffer = Buffer.from(data);

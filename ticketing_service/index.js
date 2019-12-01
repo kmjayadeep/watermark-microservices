@@ -17,12 +17,12 @@ app.get('/', (_, res) => {
 });
 
 // heartbeat
-app.get('/ping', (_, res)=>{
+app.get('/ping', (_, res) => {
   res.send('pong');
 })
 
-app.get('/test', async (req, res) => {
-  const message = await publishEvent('document', JSON.stringify({ topic: 'Test-topic' }))
+app.get('/test-publish', async (req, res) => {
+  const message = await publishEvent('watermark-document', JSON.stringify({ title: 'test-document' }))
   res.json(`sent messge ${message}`);
 });
 

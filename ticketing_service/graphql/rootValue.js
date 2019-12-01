@@ -22,7 +22,6 @@ const rootValue = {
     return {
       ticketId,
       timestamp,
-      status
     }
   },
 };

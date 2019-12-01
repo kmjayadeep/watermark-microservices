@@ -1,6 +1,6 @@
 {
-  "name": "watermark_service",
-  "version": "1.0.0",
+  "name": "ticketing-service",
+  "version": "0.1.0",
   "description": "",
   "main": "index.js",
   "scripts": {
