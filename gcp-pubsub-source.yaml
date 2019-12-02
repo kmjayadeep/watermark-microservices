@@ -1,11 +1,10 @@
 apiVersion: events.cloud.google.com/v1alpha1
 kind: PubSub
 metadata:
-  name: document-source
+  name: watermark-document-source
 spec:
-  topic: document
+  topic: watermark-document
   sink:
     apiVersion: eventing.knative.dev/v1alpha1
     kind: Broker
     name: default
-  project: watermark-260413

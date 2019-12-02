@@ -34,7 +34,7 @@ gcloud beta container clusters create $CLUSTER_NAME \
   --scopes cloud-platform
 ```
 
-* Install Knative serving and Eventing
+* Install Knative serving, Eventing and istio extras
 
 ```
 kubectl apply --selector knative.dev/crd-install=true \
@@ -43,6 +43,8 @@ kubectl apply --selector knative.dev/crd-install=true \
 
 kubectl apply --filename https://github.com/knative/serving/releases/download/v0.10.0/serving.yaml \
    --filename https://github.com/knative/eventing/releases/download/v0.10.0/release.yaml
+
+kubectl apply -f https://raw.githubusercontent.com/knative/serving/master/third_party/istio-1.3.5/istio-knative-extras.yaml
 ```
 
 * Export google service acount credentials in json and convert into base64. Edit google-cloud-key-secret.yaml and replace `<KEY HERE IN BASE64>`
@@ -79,6 +81,28 @@ Verify with following command
 kubectl get Broker default
 ```
 
+Install PubSub
+
+```
+kubectl apply --selector events.cloud.google.com/crd-install=true \
+--filename https://github.com/google/knative-gcp/releases/download/v0.10.0/cloud-run-events.yaml
+
+kubectl apply --filename https://github.com/google/knative-gcp/releases/download/v0.10.0/cloud-run-events.yaml
+```
+
+Configure Subscriptions
+
+```
+kubectl label namespace default knative-eventing-injection=enabled
+kubectl apply -f gcp-pubsub-source.yaml
+```
+
+Testing events
+
+```
+kubectl apply -f event-display.yaml
+kubectl logs --selector serving.knative.dev/service=event-display -c user-container
+```
 
 ### Setting up Services
 
