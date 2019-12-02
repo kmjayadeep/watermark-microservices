@@ -34,6 +34,8 @@ gcloud beta container clusters create $CLUSTER_NAME \
   --scopes cloud-platform
 ```
 
+* Create a cloud firestore
+
 * Install Knative serving, Eventing and istio extras
 
 ```
@@ -110,4 +112,10 @@ kubectl logs --selector serving.knative.dev/service=event-display -c user-contai
 
 ```
 kubectl apply -f ticketing_service/ticketing-knative-service.yaml
+```
+
+* Watermark result service
+
+```
+kubectl apply -f result_service/result-knative-service.yaml
 ```

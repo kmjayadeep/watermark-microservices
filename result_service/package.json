@@ -1,5 +1,5 @@
 {
-  "name": "ticketing-service",
+  "name": "result-service",
   "version": "0.1.0",
   "description": "",
   "main": "index.js",
@@ -11,13 +11,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@google-cloud/pubsub": "^1.1.5",
-    "body-parser": "^1.19.0",
-    "cors": "^2.8.5",
     "express": "^4.17.1",
     "express-graphql": "^0.9.0",
-    "graphql": "^14.5.8",
-    "uuid": "^3.3.3"
+    "firebase-admin": "^8.8.0",
+    "graphql": "^14.5.8"
   },
   "devDependencies": {
     "nodemon": "^2.0.1"
