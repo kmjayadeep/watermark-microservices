@@ -34,8 +34,6 @@ gcloud beta container clusters create $CLUSTER_NAME \
   --scopes cloud-platform
 ```
 
-* Create a cloud firestore
-
 * Install Knative serving, Eventing and istio extras
 
 ```
@@ -49,7 +47,8 @@ kubectl apply --filename https://github.com/knative/serving/releases/download/v0
 kubectl apply -f https://raw.githubusercontent.com/knative/serving/master/third_party/istio-1.3.5/istio-knative-extras.yaml
 ```
 
-* Export google service acount credentials in json and convert into base64. Edit google-cloud-key-secret.yaml and replace `<KEY HERE IN BASE64>`
+* Create service account credentials with permissions to access firestore and pubsub.
+* Export credentials in json and convert into base64. Edit google-cloud-key-secret.yaml and replace `<KEY HERE IN BASE64>`
 
 ```
 kubectl apply -f google-cloud-key-secret.yaml
