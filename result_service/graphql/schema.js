@@ -3,9 +3,19 @@ const { buildSchema } = require('graphql');
 const schema = buildSchema(`
   type Query {
     ping: String
-  },
-  type Mutation {
-    requestWatermark(content: String!, title: String!, author: String!, topic: Topic): Ticket
+    document(ticketId: String!): Document
+  }
+  type Document {
+    title: String!,
+    content: Content,
+    author: String!
+    topic: Topic,
+    watermark: String,
+    ticketId: String
+  }
+  enum Content {
+    book
+    journal
   }
   type Ticket {
     ticketId: String

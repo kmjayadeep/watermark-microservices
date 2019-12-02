@@ -21,7 +21,7 @@ app.get('/ping', (_, res) => {
 })
 
 if (process.env.NODE_ENV == 'development') {
-  app.get('/test-query', async (req, res) => {
+  app.get('/test-query', async (_, res) => {
     const { getDocumentByTicketId } = require('./db/document');
     try {
       const doc = await getDocumentByTicketId('uuid-test');

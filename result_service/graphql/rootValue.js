@@ -1,23 +1,16 @@
-const uuidv4 = require('uuid/v4');
+const { getDocumentByTicketId } = require('../db/document');
 
 const rootValue = {
   ping: () => 'pong',
-  requestWatermark: async (document) => {
-    const ticketId = uuidv4();
-    const timestamp = new Date().toString();
-    const status = 'none';
-    const documentEvent = {
-      document,
-      ticketId,
-      timestamp
-    }
-    const statusEvent = {
-      ticketId,
-      status
-    }
-    return {
-      ticketId,
-      timestamp,
+  document: async ({ ticketId }) => {
+    try {
+      const doc = await getDocumentByTicketId(ticketId);
+      if (doc.exists)
+        return doc.data();
+      return null;
+    } catch (error) {
+      console.error(error);
+      return null;
     }
   },
 };
