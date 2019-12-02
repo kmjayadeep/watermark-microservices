@@ -1,7 +1,7 @@
 apiVersion: serving.knative.dev/v1 # Current version of Knative
 kind: Service
 metadata:
-  name: status-service # The name of the app
+  name: result-service # The name of the app
   namespace: default # The namespace the app will use
 spec:
   template:
@@ -14,7 +14,7 @@ spec:
             - key: key.json 
               path: key.json
       containers:
-        - image: kmjayadeep/watermark-status-service:0.1.0
+        - image: kmjayadeep/watermark-result-service:0.1.0
           env:
             - name: NODE_ENV
               value: development # Only for development
