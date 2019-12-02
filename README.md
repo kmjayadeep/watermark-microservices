@@ -102,6 +102,7 @@ Testing events
 
 ```
 kubectl apply -f event-display.yaml
+kubectl apply -f trigger.yaml
 kubectl logs --selector serving.knative.dev/service=event-display -c user-container
 ```
 
