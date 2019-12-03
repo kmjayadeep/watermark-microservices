@@ -36,7 +36,7 @@ app.post('/', async (req, res) => {
     status: 'PENDING',
   }
 
-  await publishEvent('status', JSON.stringify(pendingStatusEvent));
+  await publishEvent('watermark-status', JSON.stringify(pendingStatusEvent));
 
   // Wait some time before publishing result
   await timerPromise(10000);
@@ -52,7 +52,7 @@ app.post('/', async (req, res) => {
     result,
   }
 
-  await publishEvent('status', JSON.stringify(finishedStatusEvent));
+  await publishEvent('watermark-status', JSON.stringify(finishedStatusEvent));
 
   res.send('Event accepted');
 });

@@ -131,3 +131,14 @@ kubectl apply -f worker_service/worker-knative-service.yaml
 ```
 kubectl apply -f result_service/result-knative-service.yaml
 ```
+
+### Checking Service Logs
+
+Use any of the following commands to view the logs of a particular running service
+
+```
+kubectl logs --selector serving.knative.dev/service=ticketing-service -c user-container -f
+kubectl logs --selector serving.knative.dev/service=status-service -c user-container -f
+kubectl logs --selector serving.knative.dev/service=result-service -c user-container -f
+kubectl logs --selector serving.knative.dev/service=worker-service -c user-container -f
+```
