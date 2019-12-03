@@ -5,7 +5,11 @@ const schema = buildSchema(`
     ping: String
   },
   type Mutation {
-    requestWatermark(content: String!, title: String!, author: String!, topic: Topic): Ticket
+    requestWatermark(content: Content!, title: String!, author: String!, topic: Topic): Ticket
+  }
+  enum Content {
+    book
+    journal
   }
   type Ticket {
     ticketId: String
