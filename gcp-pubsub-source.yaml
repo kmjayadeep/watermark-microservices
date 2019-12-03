@@ -5,6 +5,4 @@ metadata:
 spec:
   topic: watermark-document
   sink:
-    apiVersion: eventing.knative.dev/v1alpha1
-    kind: Broker
-    name: default
+    uri: http://worker-service.default.34.82.141.113.nip.io/ 
