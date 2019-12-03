@@ -6,7 +6,7 @@ const rootValue = {
   requestWatermark: async (document) => {
     const ticketId = uuidv4();
     const timestamp = new Date().toString();
-    const status = 'none';
+    const status = 'NONE';
     const documentEvent = {
       document,
       ticketId,
