@@ -120,6 +120,12 @@ kubectl apply -f ticketing_service/ticketing-knative-service.yaml
 kubectl apply -f status_service/status-knative-service.yaml
 ```
 
+* Worker service
+
+```
+kubectl apply -f worker_service/worker-knative-service.yaml
+```
+
 * Watermark result service
 
 ```

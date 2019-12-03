@@ -1,0 +1,7 @@
+version: '3'
+services:
+  web:
+    build: .
+    image: kmjayadeep/watermark-worker-service:0.1.0
+    ports:
+      - "3000:3000"
