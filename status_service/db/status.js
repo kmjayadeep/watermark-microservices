@@ -6,4 +6,14 @@ const getStatusByTicketId = (ticketId) => {
   return ref.get();
 }
 
+const updateStatusByTicketId = (ticketId, status) => {
+  const ref = db.collection('status').doc(ticketId);
+  return ref.set({
+    ticketId,
+    status,
+    updatedOn: new Date()
+  });
+}
+
 exports.getStatusByTicketId = getStatusByTicketId;
+exports.updateStatusByTicketId = updateStatusByTicketId;

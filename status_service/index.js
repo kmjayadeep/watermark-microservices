@@ -1,9 +1,13 @@
 const express = require('express');
 const express_graphql = require('express-graphql');
+const bodyParser = require('body-parser');
 const { schema } = require('./graphql/schema');
 const { rootValue } = require('./graphql/rootValue');
+const { updateStatusByTicketId } = require('./db/status');
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+app.use(bodyParser.json());
 
 app.use('/graphql', express_graphql({
   schema,
@@ -18,6 +22,14 @@ app.get('/', (_, res) => {
 // heartbeat
 app.get('/ping', (_, res) => {
   res.send('pong');
+})
+
+// route for handling events from knative
+app.post('/', async (req, res) => {
+  const event = req.body;
+  const { status, ticketId } = event;
+  await updateStatusByTicketId(ticketId, status);
+  res.send('Event Accepted');
 })
 
 if (process.env.NODE_ENV == 'development') {
@@ -37,7 +49,6 @@ if (process.env.NODE_ENV == 'development') {
     }
   });
 }
-
 
 app.listen(PORT, () => console.log(`status service app listening on port ${PORT}!`));
 
