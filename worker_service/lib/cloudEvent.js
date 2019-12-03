@@ -1,6 +1,6 @@
 const { PubSub } = require('@google-cloud/pubsub');
 
-// TODO move it to env
+// Move to env variable
 const projectId = 'watermark-260413';
 
 async function publishEvent(topicName, data) {

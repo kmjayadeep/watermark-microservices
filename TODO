@@ -1,0 +1,3 @@
+move projectid from cloudevents to env variables
+add scripts for dealing with service names when applying eventing yamls
+unit tests and comments
