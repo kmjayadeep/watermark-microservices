@@ -1,14 +1,24 @@
 const express = require('express');
 const v1 = require("cloudevents-sdk/v1");
-const bodyParser = require('body-parser');
 const app = express();
 
-// accept application/cloudevents+json
-app.use(bodyParser.json({ type: 'application/*+json' }));
-app.use(bodyParser.json());
-
 const PORT = process.env.PORT || 3000;
-const receiver = new v1.StructuredHTTPReceiver();
+
+// to parse the cloudevents
+const bodyParser = (req, _, next) => {
+  let data = "";
+
+  req.setEncoding("utf8");
+  req.on("data", function (chunk) {
+    data += chunk;
+  });
+
+  req.on("end", function () {
+    req.body = data;
+    next();
+  });
+}
+
 
 app.get('/', (_, res) => {
   res.send('watermark worker service');
@@ -25,12 +35,15 @@ if (process.env.NODE_ENV == 'development') {
   });
 }
 
-app.post('/', (req, res) => {
+
+app.post('/', bodyParser, (req, res) => {
   const headers = {
     ...req.headers,
-    'content-type' : 'application/cloudevents+json'
+    'content-type': 'application/cloudevents+json'
   }
+  console.log(req.headers);
   try {
+    const receiver = new v1.StructuredHTTPReceiver();
     const event = receiver.parse(req.body, headers);
     const formattedEvent = event.format();
     console.log(formattedEvent);
