@@ -114,6 +114,12 @@ kubectl logs --selector serving.knative.dev/service=event-display -c user-contai
 kubectl apply -f ticketing_service/ticketing-knative-service.yaml
 ```
 
+* Status service
+
+```
+kubectl apply -f status_service/status-knative-service.yaml
+```
+
 * Watermark result service
 
 ```
