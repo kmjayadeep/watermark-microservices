@@ -1,9 +1,13 @@
 const express = require('express');
 const express_graphql = require('express-graphql');
+const bodyParser = require('body-parser');
 const { schema } = require('./graphql/schema');
+const { getDocumentByTicketId, saveDocument, updateDocument } = require('./db/document');
 const { rootValue } = require('./graphql/rootValue');
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+app.use(bodyParser.json());
 
 app.use('/graphql', express_graphql({
   schema,
@@ -20,9 +24,26 @@ app.get('/ping', (_, res) => {
   res.send('pong');
 })
 
+app.post('/', async (req, res) => {
+  const event = req.body;
+  console.log('got event', event);
+  if(event.status && event.status == 'FINISHED') {
+    // Got event that watermark has finished
+    const { ticketId, result } = event;
+    await updateDocument(ticketId, {
+      watermark: result
+    });
+  }else if(event.document) {
+    // Got an event that a new document was added to queue
+    const { ticketId, document } = event;
+    await saveDocument(ticketId, document);
+    return res.send('Event accepted');
+  }else
+    res.status(400).send('Unsupported event');
+})
+
 if (process.env.NODE_ENV == 'development') {
   app.get('/test-query', async (_, res) => {
-    const { getDocumentByTicketId } = require('./db/document');
     try {
       const doc = await getDocumentByTicketId('uuid-test');
       if (!doc.exists) {

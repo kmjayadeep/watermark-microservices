@@ -91,19 +91,10 @@ kubectl apply --selector events.cloud.google.com/crd-install=true \
 kubectl apply --filename https://github.com/google/knative-gcp/releases/download/v0.10.0/cloud-run-events.yaml
 ```
 
-Configure Subscriptions
+Configure Subscriptions for events
 
 ```
-kubectl label namespace default knative-eventing-injection=enabled
 kubectl apply -f gcp-pubsub-source.yaml
-```
-
-Testing events
-
-```
-kubectl apply -f event-display.yaml
-kubectl apply -f trigger.yaml
-kubectl logs --selector serving.knative.dev/service=event-display -c user-container
 ```
 
 ### Setting up Services
