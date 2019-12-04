@@ -17,3 +17,20 @@ spec:
   sink:
     uri: http://status-service.default.34.82.141.113.nip.io/
 ---
+apiVersion: events.cloud.google.com/v1alpha1
+kind: PubSub
+metadata:
+  name: watermark-document-result-source
+spec:
+  topic: watermark-document
+  sink:
+    uri: http://result-service.default.34.82.141.113.nip.io/
+---
+apiVersion: events.cloud.google.com/v1alpha1
+kind: PubSub
+metadata:
+  name: watermark-status-result-source
+spec:
+  topic: watermark-status
+  sink:
+    uri: http://result-service.default.34.82.141.113.nip.io/
