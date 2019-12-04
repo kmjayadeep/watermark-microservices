@@ -68,35 +68,6 @@ Replace the IP in `config-domain.yaml` file and apply the config
 kubectl apply -f config-domain.yaml
 ```
 
-* Eventing setup
-
-Enable eventing injection in default namespace
-
-```
-kubectl label namespace default knative-eventing-injection=enabled
-```
-
-Verify with following command
-
-```
-kubectl get Broker default
-```
-
-Install PubSub
-
-```
-kubectl apply --selector events.cloud.google.com/crd-install=true \
---filename https://github.com/google/knative-gcp/releases/download/v0.10.0/cloud-run-events.yaml
-
-kubectl apply --filename https://github.com/google/knative-gcp/releases/download/v0.10.0/cloud-run-events.yaml
-```
-
-Configure Subscriptions for events
-
-```
-kubectl apply -f gcp-pubsub-source.yaml
-```
-
 ### Setting up Services
 
 * Ticketing service
@@ -121,6 +92,24 @@ kubectl apply -f worker_service/worker-knative-service.yaml
 
 ```
 kubectl apply -f result_service/result-knative-service.yaml
+```
+
+## Setting up events
+
+Install PubSub
+
+```
+kubectl apply --selector events.cloud.google.com/crd-install=true \
+--filename https://github.com/google/knative-gcp/releases/download/v0.10.0/cloud-run-events.yaml
+
+kubectl apply --filename https://github.com/google/knative-gcp/releases/download/v0.10.0/cloud-run-events.yaml
+```
+
+Open gcp-pubsub-source.yaml, update the sink urls with the service urls and apply the configuration
+
+
+```
+kubectl apply -f gcp-pubsub-source.yaml
 ```
 
 ### Checking Service Logs
