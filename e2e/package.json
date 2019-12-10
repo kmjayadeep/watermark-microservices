@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha test.js -t 30000"
+    "test": "mocha test.js -t 30000",
+    "allure:test": "mocha test.js -t 30000 -reporter mocha-allure-reporter",
+    "allure:serve": "allure serve"
   },
   "keywords": [],
   "author": "",
@@ -12,7 +14,11 @@
   "dependencies": {
     "chakram": "^1.5.0",
     "mocha": "^6.2.2",
+    "mocha-allure-reporter": "^1.4.0",
     "mocha-logger": "^1.0.6",
     "node-fetch": "^2.6.0"
+  },
+  "devDependencies": {
+    "allure-commandline": "^2.13.0"
   }
 }

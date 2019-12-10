@@ -2,6 +2,8 @@ const chai = require('chai')
 const fetch = require('node-fetch');
 const mlog = require('mocha-logger');
 
+require("mocha-allure-reporter");
+
 const { expect } = chai;
 
 const ticketingService = 'http://ticketing-service.default.34.82.141.113.nip.io'
