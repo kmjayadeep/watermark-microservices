@@ -1,3 +1,4 @@
+const fetch = require('node-fetch');
 
 const graphqlFetch = (endPoint, data) => fetch(endPoint, {
   headers: {
