@@ -19,13 +19,14 @@ describe("Ticketing Service", function () {
   });
 
   it('Should return ticketId when requesting watermarks', async function () {
-    const params = ['book','my-awesome-book','me','business'];
+    const params = ['book', 'my-awesome-book', 'me', 'business'];
     const response = await ticketingService.requestWatermark(...params);
-    expect(response).to.have.deep.property('data.requestWatermark.ticketId');
-    expect(response).to.have.deep.property('data.requestWatermark.timestamp');
-    expect(response.data.requestWatermark.ticketId).to.be.a('string');
-    expect(response.data.requestWatermark.ticketId).to.not.empty;
-    mlog.success('Got ticketId', response.data.requestWatermark.ticketId, 'for request with params', params);
+    expect(response).to.have.deep.property('data.requestWatermark');
+    const { requestWatermark } = response.data;
+    expect(requestWatermark).to.have.all.keys('ticketId', 'timestamp');
+    expect(requestWatermark.ticketId).to.be.a('string');
+    expect(requestWatermark.ticketId).to.not.empty;
+    mlog.success('Got ticketId', requestWatermark.ticketId, 'for request with params', params);
   });
 
 });
@@ -42,7 +43,7 @@ describe("Status Service", function () {
 
     before(async () => {
       mlog.pending('Creating a new request for checking status');
-      const response = await ticketingService.requestWatermark('book','my-test-title','me','business');
+      const response = await ticketingService.requestWatermark('book', 'my-test-title', 'me', 'business');
       ticketId = response.data.requestWatermark.ticketId;
       mlog.log('Got ticketId', ticketId);
     })
@@ -54,10 +55,9 @@ describe("Status Service", function () {
 
       const response = await statusService.getStatus(ticketId);
 
-      expect(response).to.have.deep.property('data.document.ticketId');
-      expect(response).to.have.deep.property('data.document.status');
-      expect(response).to.have.deep.property('data.document.updatedOn');
-      const document = response.data.document;
+      expect(response).to.have.deep.property('data.document');
+      const { document } = response.data;
+      expect(document).to.have.all.keys('ticketId', 'status', 'updatedOn');
       expect(document.ticketId).to.equal(ticketId);
       expect(document.status).to.be.oneOf(['FINISHED', 'PENDING', 'NONE']);
       mlog.success('Got request status', document.status);
