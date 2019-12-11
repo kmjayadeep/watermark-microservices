@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha test.js -t 30000",
-    "allure:test": "mocha test.js -t 30000 -reporter mocha-allure-reporter",
+    "test": "mocha -t 30000",
+    "allure:test": "mocha -t 30000 -reporter mocha-allure-reporter",
     "allure:serve": "allure serve",
     "allure": "npm run allure:test && npm run allure:serve"
   },
