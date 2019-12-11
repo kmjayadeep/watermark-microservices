@@ -6,6 +6,7 @@ const sleep = require('../utils/sleep');
 
 const ticketingService = require('../services/ticketing.service');
 const statusService = require('../services/status.service');
+const resultService = require('../services/result.service');
 
 const { expect } = chai;
 
@@ -21,8 +22,7 @@ describe("Ticketing Service", function () {
     const params = ['book','my-awesome-book','me','business'];
     const response = await ticketingService.requestWatermark(...params);
     expect(response).to.have.deep.property('data.requestWatermark.ticketId');
-    expect(response).to.have.deep.property('data.requestWatermark.timestamp')
-    ;
+    expect(response).to.have.deep.property('data.requestWatermark.timestamp');
     expect(response.data.requestWatermark.ticketId).to.be.a('string');
     expect(response.data.requestWatermark.ticketId).to.not.empty;
     mlog.success('Got ticketId', response.data.requestWatermark.ticketId, 'for request with params', params);
@@ -30,7 +30,7 @@ describe("Ticketing Service", function () {
 
 });
 
-describe.only("Status Service", function () {
+describe("Status Service", function () {
   it("Should be running", async function () {
     const response = await statusService.ping();
     expect(response).to.equal('pong');
@@ -68,7 +68,7 @@ describe.only("Status Service", function () {
 
 describe("Result Service", function () {
   it("Should be running", async function () {
-    const response = await fetch(resultService);
-    expect(response.status).to.equal(200);
+    const response = await resultService.ping();
+    expect(response).to.equal('pong');
   });
 });
