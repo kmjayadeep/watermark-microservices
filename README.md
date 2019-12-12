@@ -154,34 +154,51 @@ npm run allure:serve
 Sample response
 
 ```
+  Ticketing Service
+    ✓ Should be running (496ms)
+    ✔ Got ticketId 9fdd8f2e-4840-49b1-8a13-4a641df19f2f for request with params book,my-awesome-book,me,business
+    ✓ Should return ticketId when requesting watermarks (2544ms)
 
-   ✔ Got ticketId 56188b13-85bb-4d9b-9c95-7ba0e6e0be93 for request with params book,my-awesome-book,me,business
+  Status Service
+    ✓ Should be running (409ms)
+    Test if it returns status of requests
     - Creating a new request for checking status
-    - Got ticketId 7724f5a4-1029-41de-b925-cd3e08f2bedd
-    ✔ Got request status NONE
+    - Got ticketId aeabdc38-71a5-43b4-a7bd-5364c0ecb8bf
+    ✔ Got request status PENDING
+      ✓ Should give correct status (3438ms)
+  Result Service
+    ✓ Should be running (396ms)
+    Test if result service is returning documents
     - Creating a new request for checking result
-    - Got ticketId 667dda9c-d897-4701-8c58-b4fb8bb647e5
+    - Got ticketId a9af4913-e498-4285-897e-0fbdd71d8e8d
     ✔ Got document result my-test-title book null me
+      ✓ should return document (3458ms)
+
+  e2e
     - Creating a new request with params book,my-awesome-book,me,business
-    - Got ticketId 68a0de25-f7f8-4832-9988-a8dd95a7cf6c
-    - Checking status for 68a0de25-f7f8-4832-9988-a8dd95a7cf6c
+    - Got ticketId 2cbc5a1a-e205-48a9-911f-bb920b2b6e18
+    - Checking status for 2cbc5a1a-e205-48a9-911f-bb920b2b6e18
     - Current status is PENDING
-    - Checking status for 68a0de25-f7f8-4832-9988-a8dd95a7cf6c
+    - Checking status for 2cbc5a1a-e205-48a9-911f-bb920b2b6e18
     - Current status is PENDING
-    - Checking status for 68a0de25-f7f8-4832-9988-a8dd95a7cf6c
+    - Checking status for 2cbc5a1a-e205-48a9-911f-bb920b2b6e18
     - Current status is PENDING
-    - Checking status for 68a0de25-f7f8-4832-9988-a8dd95a7cf6c
+    - Checking status for 2cbc5a1a-e205-48a9-911f-bb920b2b6e18
     - Current status is PENDING
-    - Checking status for 68a0de25-f7f8-4832-9988-a8dd95a7cf6c
+    - Checking status for 2cbc5a1a-e205-48a9-911f-bb920b2b6e18
     - Current status is PENDING
-    - Checking status for 68a0de25-f7f8-4832-9988-a8dd95a7cf6c
+    - Checking status for 2cbc5a1a-e205-48a9-911f-bb920b2b6e18
     - Current status is PENDING
-    - Checking status for 68a0de25-f7f8-4832-9988-a8dd95a7cf6c
+    - Checking status for 2cbc5a1a-e205-48a9-911f-bb920b2b6e18
     - Current status is PENDING
-    - Checking status for 68a0de25-f7f8-4832-9988-a8dd95a7cf6c
+    - Checking status for 2cbc5a1a-e205-48a9-911f-bb920b2b6e18
     - Current status is PENDING
-    - Checking status for 68a0de25-f7f8-4832-9988-a8dd95a7cf6c
+    - Checking status for 2cbc5a1a-e205-48a9-911f-bb920b2b6e18
     - Current status is FINISHED
-    ✔ Got watermark WATERMARK : {"content":"book","title":"my-awesome-book","author":"me","topic":"business"} 1576119468500
+    ✔ Got watermark WATERMARK : {"content":"book","title":"my-awesome-book","author":"me","topic":"business"} 1576120055355
+    ✓ Should watermark a given document (15252ms)
+
+
+  7 passing (29s)
 
 ```
