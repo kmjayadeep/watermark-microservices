@@ -122,3 +122,66 @@ kubectl logs --selector serving.knative.dev/service=status-service -c user-conta
 kubectl logs --selector serving.knative.dev/service=result-service -c user-container -f
 kubectl logs --selector serving.knative.dev/service=worker-service -c user-container -f
 ```
+
+### Running e2e tests
+
+Go to e2e folder and run the following commands
+
+* Run full test suite
+
+```
+npm test
+```
+
+* Run full test suite and serve results in allure dashboard
+
+```
+npm run allure
+```
+
+* Run tests with allure reporting
+
+```
+npm run allure:test
+```
+
+* Serve previous test results in allure dashboard
+
+```
+npm run allure:serve
+```
+
+Sample response
+
+```
+
+   ✔ Got ticketId 56188b13-85bb-4d9b-9c95-7ba0e6e0be93 for request with params book,my-awesome-book,me,business
+    - Creating a new request for checking status
+    - Got ticketId 7724f5a4-1029-41de-b925-cd3e08f2bedd
+    ✔ Got request status NONE
+    - Creating a new request for checking result
+    - Got ticketId 667dda9c-d897-4701-8c58-b4fb8bb647e5
+    ✔ Got document result my-test-title book null me
+    - Creating a new request with params book,my-awesome-book,me,business
+    - Got ticketId 68a0de25-f7f8-4832-9988-a8dd95a7cf6c
+    - Checking status for 68a0de25-f7f8-4832-9988-a8dd95a7cf6c
+    - Current status is PENDING
+    - Checking status for 68a0de25-f7f8-4832-9988-a8dd95a7cf6c
+    - Current status is PENDING
+    - Checking status for 68a0de25-f7f8-4832-9988-a8dd95a7cf6c
+    - Current status is PENDING
+    - Checking status for 68a0de25-f7f8-4832-9988-a8dd95a7cf6c
+    - Current status is PENDING
+    - Checking status for 68a0de25-f7f8-4832-9988-a8dd95a7cf6c
+    - Current status is PENDING
+    - Checking status for 68a0de25-f7f8-4832-9988-a8dd95a7cf6c
+    - Current status is PENDING
+    - Checking status for 68a0de25-f7f8-4832-9988-a8dd95a7cf6c
+    - Current status is PENDING
+    - Checking status for 68a0de25-f7f8-4832-9988-a8dd95a7cf6c
+    - Current status is PENDING
+    - Checking status for 68a0de25-f7f8-4832-9988-a8dd95a7cf6c
+    - Current status is FINISHED
+    ✔ Got watermark WATERMARK : {"content":"book","title":"my-awesome-book","author":"me","topic":"business"} 1576119468500
+
+```
