@@ -27,25 +27,26 @@ app.get('/ping', (_, res) => {
 app.post('/', async (req, res) => {
   const event = req.body;
   console.log('got event', event);
-  if(event.status) {
-    if(event.status != 'FINISHED'){
+  if (event.status) {
+    if (event.status != 'FINISHED') {
       // Only accept finshed event
-      return res.send('Event accepted');
+      return res.send('Ignoring event');
     }
     // Got event that watermark has finished
     const { ticketId, result } = event;
     await updateDocument(ticketId, {
       watermark: result.watermark
     });
-  }else if(event.document) {
+    return res.send('Status event accepted')
+  } else if (event.document) {
     // Got an event that a new document was added to queue
     const { ticketId, document } = event;
     await saveDocument(ticketId, {
       ...document,
       ticketId,
     });
-    return res.send('Event accepted');
-  }else
+    return res.send('Document event accepted');
+  } else
     res.status(400).send('Unsupported event');
 })
 
