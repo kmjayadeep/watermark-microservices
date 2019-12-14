@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "dev": "NODE_ENV=development nodemon index.js"
+    "dev": "NODE_ENV=development nodemon index.js",
+    "test": "mocha -t 10000",
+    "coverage": "nyc --reporter=html --reporter=text mocha -t 10000 && open coverage/index.html"
   },
   "keywords": [],
   "author": "",
@@ -20,6 +22,17 @@
     "uuid": "^3.3.3"
   },
   "devDependencies": {
-    "nodemon": "^2.0.1"
+    "chai": "^4.2.0",
+    "mocha": "^6.2.2",
+    "nodemon": "^2.0.1",
+    "nyc": "^14.1.1"
+  },
+  "nyc": {
+    "all": true,
+    "include": [
+      "index.js",
+      "lib/*.js",
+      "graphql/*.js"
+    ]
   }
 }
