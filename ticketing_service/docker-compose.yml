@@ -2,7 +2,7 @@ version: '3'
 services:
   web:
     build: .
-    image: kmjayadeep/watermark-ticketing-service:0.1.1
+    image: kmjayadeep/watermark-ticketing-service:0.1.2
     ports:
       - "3000:3000"
 
