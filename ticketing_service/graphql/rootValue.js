@@ -16,9 +16,9 @@ const rootValue = {
       ticketId,
       status
     }
-    const documentMessage = await publishEvent('watermark-document', JSON.stringify(documentEvent));
-    const statusMessage = await publishEvent('watermark-status', JSON.stringify(statusEvent));
-    console.log(documentMessage, statusMessage);
+    const publishWatermark = publishEvent('watermark-document', JSON.stringify(documentEvent));
+    const publishStatus = publishEvent('watermark-status', JSON.stringify(statusEvent));
+    await Promise.all[publishWatermark, publishStatus];
     return {
       ticketId,
       timestamp,

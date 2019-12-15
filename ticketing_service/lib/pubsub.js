@@ -14,5 +14,5 @@ const publish = (pubsub, topicName, data) => {
 module.exports = {
   createPubsub,
   createTopic,
-  publish
+  publish,
 }
