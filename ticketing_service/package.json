@@ -7,7 +7,8 @@
     "start": "node index.js",
     "dev": "NODE_ENV=development nodemon index.js",
     "test": "mocha -t 10000",
-    "coverage": "nyc --reporter=html --reporter=text mocha -t 10000 && open coverage/index.html"
+    "coverage": "nyc --reporter=html --reporter=text mocha -t 10000",
+    "opencoverage": "open coverage/index.html"
   },
   "keywords": [],
   "author": "",
@@ -25,13 +26,15 @@
     "chai": "^4.2.0",
     "mocha": "^6.2.2",
     "nodemon": "^2.0.1",
-    "nyc": "^14.1.1"
+    "nyc": "^14.1.1",
+    "sinon": "^7.5.0"
   },
   "nyc": {
     "all": true,
     "include": [
       "index.js",
       "lib/*.js",
+      "controllers/*.js",
       "graphql/*.js"
     ]
   }
