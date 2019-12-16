@@ -1,9 +1,13 @@
 
 const sinon = require('sinon');
+const assert = require('assert');
+const pubsubLib = require('../lib/pubsub');
 const { expect } = require('chai');
 const { pingRequest, indexRequest } = require('../controllers/watermarkController');
 const { graphQlMiddleware } = require('../controllers/graphqlController');
-const { createPubsub, createTopic, publish } = require('../lib/pubsub');
+const { publishEvent } = require('../lib/cloudEvent');
+
+const { createPubsub, createTopic, publish } = pubsubLib;
 
 describe('#controllers', () => {
   describe('#watermarkController', () => {
@@ -46,7 +50,7 @@ describe('#controllers', () => {
   })
 });
 
-describe('#cloudEvents', () => {
+describe('#lib functions', () => {
   describe('#pubsub', () => {
 
     it('should create topic', () => {
@@ -76,7 +80,35 @@ describe('#cloudEvents', () => {
     it('should return new pubsub object', () => {
       const pubsub = createPubsub('test-project');
       expect(pubsub).to.not.undefined;
-    })
+    });
+  })
 
+  describe('#cloudevents', () => {
+
+    const pubsubMock = {};
+    const mockMessageId = 'test-messageId';
+
+    beforeEach(() => {
+      sinon.stub(pubsubLib, 'createPubsub').callsFake(() => {
+        return pubsubMock;
+      })
+      sinon.stub(pubsubLib, 'publish').callsFake(() => {
+        return mockMessageId;
+      })
+    });
+    afterEach(() => {
+      pubsubLib.createPubsub.restore();
+    });
+
+    it('should be able to publish cloud events', async () => {
+
+      const [testTopic, testData] = ['test-topic', 'test-data'];
+
+      const messageId = await publishEvent(testTopic, testData);
+
+      assert(pubsubLib.createPubsub.calledOnce);
+      assert(pubsubLib.publish.calledWith(pubsubMock, testTopic, testData));
+      expect(messageId).equal(mockMessageId);
+    })
   })
 })
