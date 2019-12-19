@@ -2,6 +2,8 @@
 
 A microservices based prject to watermark a document asynchronously.
 
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=kmjayadeep_watermark-microservices&metric=alert_status)](https://sonarcloud.io/dashboard?id=kmjayadeep_watermark-microservices)
+
 ## Architecture
 
 ![Image of Yaktocat](assets/architecture.png)

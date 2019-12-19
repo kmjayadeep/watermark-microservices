@@ -46,8 +46,9 @@ app.post('/', async (req, res) => {
       ticketId,
     });
     return res.send('Document event accepted');
-  } else
+  } else{
     res.status(400).send('Unsupported event');
+  }
 })
 
 if (process.env.NODE_ENV == 'development') {
