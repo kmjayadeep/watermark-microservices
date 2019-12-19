@@ -18,7 +18,7 @@ const requestWatermark = async (document) => {
   }
   const publishWatermark = cloudEvent.publishEvent('watermark-document', JSON.stringify(documentEvent));
   const publishStatus = cloudEvent.publishEvent('watermark-status', JSON.stringify(statusEvent));
-  await Promise.all[publishWatermark, publishStatus];
+  await Promise.all([publishWatermark, publishStatus]);
   return {
     ticketId,
     timestamp,

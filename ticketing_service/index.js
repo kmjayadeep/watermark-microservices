@@ -30,17 +30,17 @@ const createTopics = async (pubsub) => {
     return topics;
   } catch (error) {
     return false;
-  };
+  }
 }
 
-const startServer = async (PORT) => {
+const startServer = async (port) => {
   if (!verifyGoogleCreds())
     return console.error('Unable to start server', 'Google credentials are missing');
   const pubsub = createPubsub();
   const topics = await createTopics(pubsub);
   if (!topics)
     console.log('unable to create topics, likely that topic already exists');
-  app.listen(PORT, () => console.log(`Ticketing service app listening on port ${PORT}!`));
+  app.listen(port, () => console.log(`Ticketing service app listening on port ${port}!`));
 }
 
 if (require.main === module) {

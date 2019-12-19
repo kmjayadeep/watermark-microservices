@@ -105,7 +105,7 @@ describe('e2e', function () {
     const params = ['book', 'my-awesome-book', 'me', 'business'];
     mlog.pending('Creating a new request with params', params);
     const response = await ticketingService.requestWatermark(...params);
-    ticketId = response.data.requestWatermark.ticketId;
+    const ticketId = response.data.requestWatermark.ticketId;
     mlog.log('Got ticketId', ticketId);
 
     let status = null;

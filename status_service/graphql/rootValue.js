@@ -6,7 +6,7 @@ const rootValue = {
     try {
       const doc = await getStatusByTicketId(ticketId);
       if (doc.exists){
-        const { ticketId, status, updatedOn } = doc.data();
+        const { status, updatedOn } = doc.data();
         const updatedDate = new Date(updatedOn._seconds * 1000).toISOString();
         const result = {
           ticketId,
