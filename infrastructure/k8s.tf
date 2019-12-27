@@ -1,8 +1,13 @@
 provider "google" {
   credentials = file("key.json")
-  region      = "europe-west1"
   zone        = "europe-west1-b"
   # project     = "my-project-id"
+}
+
+provider "google-beta" {
+  version     = "2.11.0"
+  credentials = file("key.json")
+  zone        = "europe-west1-b"
 }
 
 resource "google_compute_network" "watermark_development" {
@@ -17,12 +22,20 @@ resource "google_compute_subnetwork" "gkecluster" {
 }
 
 resource "google_container_cluster" "watermark_development_cluster" {
+  provider           = google-beta
   name               = "watermark-development-cluster"
   remove_default_node_pool = true
   initial_node_count       = 1
   network            = "watermark-development"
   subnetwork         = "gkecluster"
   min_master_version = "1.15.4-gke.22"
+
+  addons_config {
+    istio_config {
+      disabled = false
+      auth     = "AUTH_NONE"
+    }
+  }
 
   master_auth {
     username = ""
