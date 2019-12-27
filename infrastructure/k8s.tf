@@ -38,7 +38,11 @@ resource "google_container_cluster" "watermark_development_cluster" {
 resource "google_container_node_pool" "primary_preemptible_nodes" {
   name       = "my-node-pool"
   cluster    = google_container_cluster.watermark_development_cluster.name
-  node_count = 2
+
+  autoscaling {
+    max_node_count = 5
+    min_node_count = 2
+  }
 
   node_config {
     preemptible  = true
