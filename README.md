@@ -209,14 +209,9 @@ Sample response
 
 To use terraform for provisioning kubernetes, change to `infrastructure` directory and follow the instructions below.
 
-### Setup environment variables
-Replace the variables are required and run the following commands in shell
+### Setup
 
-```
-export GOOGLE_CREDENTIALS=$(cat key.json)
-export GOOGLE_PROJECT=<your-project-id>
-export GOOGLE_REGION=europe-west1
-```
+Copy service account credentials to key.json and keep it in `infrastructure` directory. Modify `variables.tf` as needed.
 
 ### Run Terraform
 

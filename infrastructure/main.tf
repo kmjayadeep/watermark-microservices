@@ -1,34 +1,23 @@
 provider "google" {
+  version = "3.0.0"
   credentials = file("key.json")
-  zone        = "europe-west1-b"
-  # project     = "my-project-id"
+  project     = var.project
+  zone        = var.zone
 }
 
 provider "google-beta" {
-  version     = "2.11.0"
+  version     = "3.0.0"
   credentials = file("key.json")
-  zone        = "europe-west1-b"
+  project     = var.project
+  zone        = var.zone
 }
 
-// resource "google_compute_network" "watermark_development" {
-//   name                    = "watermark-development"
-//   auto_create_subnetworks = "false"
-// }
-
-// resource "google_compute_subnetwork" "gkecluster" {
-//   name          = "gkecluster"
-//   ip_cidr_range = "10.0.1.0/24"
-//   network       = google_compute_network.watermark_development.self_link
-// }
-
 resource "google_container_cluster" "watermark_development_cluster" {
-  // network            = "watermark-development"
-  // subnetwork         = "gkecluster"
-  provider           = google-beta
-  name               = "watermark-development-cluster"
+  provider                 = google-beta
+  name                     = var.cluster_name
   remove_default_node_pool = true
   initial_node_count       = 1
-  min_master_version = "1.15.4-gke.22"
+  min_master_version       = var.min_master_version
 
   addons_config {
     istio_config {
@@ -38,8 +27,8 @@ resource "google_container_cluster" "watermark_development_cluster" {
   }
 
   master_auth {
-    username = ""
-    password = ""
+    username = var.master_username
+    password = var.master_password
 
     client_certificate_config {
       issue_client_certificate = false
@@ -49,17 +38,18 @@ resource "google_container_cluster" "watermark_development_cluster" {
 
 
 resource "google_container_node_pool" "primary_preemptible_nodes" {
-  name       = "my-node-pool"
-  cluster    = google_container_cluster.watermark_development_cluster.name
+  name               = var.node_pool_name
+  cluster            = google_container_cluster.watermark_development_cluster.name
+  initial_node_count = var.min_node_count
 
   autoscaling {
-    max_node_count = 5
-    min_node_count = 2
+    max_node_count = var.max_node_count
+    min_node_count = var.min_node_count
   }
 
   node_config {
-    preemptible  = true
-    machine_type = "n1-standard-1"
+    preemptible  = false
+    machine_type = var.machine_type
 
     metadata = {
       disable-legacy-endpoints = "true"
