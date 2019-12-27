@@ -207,10 +207,19 @@ Sample response
 
 # Terraform
 
-Setup environment variables. Replace the variables are required and run the following commands
+To use terraform for provisioning kubernetes, change to `infrastructure` directory and follow the instructions below.
+
+### Setup environment variables
+Replace the variables are required and run the following commands in shell
 
 ```
 export GOOGLE_CREDENTIALS=$(cat key.json)
 export GOOGLE_PROJECT=<your-project-id>
 export GOOGLE_REGION=europe-west1
+```
+
+### Run Terraform
+
+```
+terraform apply
 ```
