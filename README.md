@@ -204,3 +204,13 @@ Sample response
   7 passing (29s)
 
 ```
+
+# Terraform
+
+Setup environment variables. Replace the variables are required and run the following commands
+
+```
+export GOOGLE_CREDENTIALS=$(cat key.json)
+export GOOGLE_PROJECT=<your-project-id>
+export GOOGLE_REGION=europe-west1
+```
