@@ -1,0 +1,10 @@
+project            = "watermark-260413"
+zone               = "us-east1"
+cluster_name       = "watermark-development-cluster"
+node_pool_name     = "watermark-node-pool"
+min_master_version = "1.15.4-gke.22"
+machine_type       = "n1-standard-1"
+min_node_count     = 1
+max_node_count     = 5
+master_username    = ""
+master_password    = ""

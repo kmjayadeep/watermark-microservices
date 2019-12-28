@@ -1,23 +1,21 @@
 variable "cluster_name" {
-  default = "watermark-development-cluster"
+  description = "Name of kubernetes cluster"
 }
 
 variable "node_pool_name" {
-  default = "watermark-node-pool"
+  description = "Name of node pool assigned to cluster"
 }
 
 variable "project" {
-  default = "watermark-260413"
   description = "GCP Project Id"
 }
 
 variable "zone" {
   description = "The zone in which all GCP resources will be launched."
-  default     = "us-east1"
 }
 
 variable "min_master_version" {
-  default = "1.15.4-gke.22"
+  description = "Minimum version for kubernetes master"
 }
 variable "master_username" {
   description = "GKE cluster master username"
@@ -29,7 +27,6 @@ variable "master_password" {
 
 variable "machine_type" {
   description = "Node machine type"
-  default     = "n1-standard-1"
 }
 
 variable "min_node_count" {
