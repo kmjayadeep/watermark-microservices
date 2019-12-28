@@ -15,16 +15,20 @@ provider "google-beta" {
 provider "kubernetes" {
   version = "~> 1.7"
 
-  host     = "https://${google_container_cluster.watermark_development_cluster.endpoint}"
+  host     = "https://${google_container_cluster.gke_cluster.endpoint}"
   username = var.master_username
   password = var.master_password
 
-  client_certificate     = base64decode(google_container_cluster.watermark_development_cluster.master_auth.0.client_certificate)
-  client_key             = base64decode(google_container_cluster.watermark_development_cluster.master_auth.0.client_key)
-  cluster_ca_certificate = base64decode(google_container_cluster.watermark_development_cluster.master_auth.0.cluster_ca_certificate)
+  client_certificate     = base64decode(google_container_cluster.gke_cluster.master_auth.0.client_certificate)
+  client_key             = base64decode(google_container_cluster.gke_cluster.master_auth.0.client_key)
+  cluster_ca_certificate = base64decode(google_container_cluster.gke_cluster.master_auth.0.cluster_ca_certificate)
 }
 
-resource "google_container_cluster" "watermark_development_cluster" {
+provider "null" {
+  version = "~> 2.1"
+}
+
+resource "google_container_cluster" "gke_cluster" {
   provider                 = google-beta
   name                     = var.cluster_name
   remove_default_node_pool = true
@@ -49,9 +53,9 @@ resource "google_container_cluster" "watermark_development_cluster" {
 }
 
 
-resource "google_container_node_pool" "primary_preemptible_nodes" {
+resource "google_container_node_pool" "gke_node_pool" {
   name               = var.node_pool_name
-  cluster            = google_container_cluster.watermark_development_cluster.name
+  cluster            = google_container_cluster.gke_cluster.name
   initial_node_count = var.min_node_count
 
   autoscaling {
@@ -77,22 +81,42 @@ resource "google_container_node_pool" "primary_preemptible_nodes" {
 resource "null_resource" "install_knative" {
 
   triggers = {
-    cluster_ep = google_container_cluster.watermark_development_cluster.endpoint
+    cluster_ep = google_container_cluster.gke_cluster.endpoint
   }
 
   provisioner "local-exec" {
     command = <<EOT
+
       echo "$${CA_CERTIFICATE}" > ca.crt
-      echo "$${K8S_SERVER}"
+      kubectl config --kubeconfig=ci set-cluster k8s --server=$${K8S_SERVER} --certificate-authority=ca.crt
+      kubectl config --kubeconfig=ci set-credentials admin --username=$${K8S_USERNAME} --password=$${K8S_PASSWORD}
+      kubectl config --kubeconfig=ci set-context k8s-ci --cluster=k8s --namespace=default --user=admin
+      kubectl config --kubeconfig=ci use-context k8s-ci
+      export KUBECONFIG=ci
+
     EOT
 
     environment = {
-      CA_CERTIFICATE = base64decode(google_container_cluster.watermark_development_cluster.master_auth.0.cluster_ca_certificate)
-      K8S_SERVER     = "https://${google_container_cluster.watermark_development_cluster.endpoint}"
+      CA_CERTIFICATE = base64decode(google_container_cluster.gke_cluster.master_auth.0.cluster_ca_certificate)
+      K8S_SERVER     = "https://${google_container_cluster.gke_cluster.endpoint}"
       K8S_USERNAME   = var.master_username
       K8S_PASSWORD   = var.master_password
     }
   }
 
-  depends_on = [google_container_node_pool.primary_preemptible_nodes]
+  provisioner "local-exec" {
+    command = <<EOT
+
+      kubectl apply --selector knative.dev/crd-install=true \
+        --filename https://github.com/knative/serving/releases/download/v0.11.0/serving.yaml \
+        --filename https://github.com/knative/eventing/releases/download/v0.11.0/release.yaml
+
+
+      kubectl apply --filename https://github.com/knative/serving/releases/download/v0.11.0/serving.yaml \
+        --filename https://github.com/knative/eventing/releases/download/v0.11.0/release.yaml
+
+    EOT
+  }
+
+  depends_on = [google_container_node_pool.gke_node_pool]
 }
