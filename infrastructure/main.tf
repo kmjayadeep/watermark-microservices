@@ -19,9 +19,9 @@ provider "kubernetes" {
   username = var.master_username
   password = var.master_password
 
-  client_certificate     = "${base64decode(google_container_cluster.watermark_development_cluster.master_auth.0.client_certificate)}"
-  client_key             = "${base64decode(google_container_cluster.watermark_development_cluster.master_auth.0.client_key)}"
-  cluster_ca_certificate = "${base64decode(google_container_cluster.watermark_development_cluster.master_auth.0.cluster_ca_certificate)}"
+  client_certificate     = base64decode(google_container_cluster.watermark_development_cluster.master_auth.0.client_certificate)
+  client_key             = base64decode(google_container_cluster.watermark_development_cluster.master_auth.0.client_key)
+  cluster_ca_certificate = base64decode(google_container_cluster.watermark_development_cluster.master_auth.0.cluster_ca_certificate)
 }
 
 resource "google_container_cluster" "watermark_development_cluster" {
@@ -74,3 +74,25 @@ resource "google_container_node_pool" "primary_preemptible_nodes" {
   }
 }
 
+resource "null_resource" "install_knative" {
+
+  triggers = {
+    cluster_ep = google_container_cluster.watermark_development_cluster.endpoint
+  }
+
+  provisioner "local-exec" {
+    command = <<EOT
+      echo "$${CA_CERTIFICATE}" > ca.crt
+      echo "$${K8S_SERVER}"
+    EOT
+
+    environment = {
+      CA_CERTIFICATE = base64decode(google_container_cluster.watermark_development_cluster.master_auth.0.cluster_ca_certificate)
+      K8S_SERVER     = "https://${google_container_cluster.watermark_development_cluster.endpoint}"
+      K8S_USERNAME   = var.master_username
+      K8S_PASSWORD   = var.master_password
+    }
+  }
+
+  depends_on = [google_container_node_pool.primary_preemptible_nodes]
+}

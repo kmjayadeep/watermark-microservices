@@ -211,9 +211,12 @@ To use terraform for provisioning kubernetes, change to `infrastructure` directo
 
 ### Setup
 
-Copy service account credentials to key.json and keep it in `infrastructure` directory. Modify `variables.tf` as needed.
+Copy service account credentials to key.json and keep it in `infrastructure` directory.
+
+Copy `cluster.auto.tfvars.example` into `cluster.auto.tfvars` and modify the variables as needed
 
 ### Run Terraform
+Run the following command, verify the output and type `yes` to exectute terraform plan
 
 ```
 terraform apply
