@@ -1,13 +1,11 @@
 provider "google" {
   version = "3.0.0"
-  credentials = file("key.json")
   project     = var.project
   zone        = var.zone
 }
 
 provider "google-beta" {
   version     = "3.0.0"
-  credentials = file("key.json")
   project     = var.project
   zone        = var.zone
 }

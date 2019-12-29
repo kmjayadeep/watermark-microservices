@@ -102,9 +102,9 @@ Install PubSub
 
 ```
 kubectl apply --selector events.cloud.google.com/crd-install=true \
---filename https://github.com/google/knative-gcp/releases/download/v0.10.0/cloud-run-events.yaml
+--filename https://github.com/google/knative-gcp/releases/download/v0.11.0/cloud-run-events.yaml
 
-kubectl apply --filename https://github.com/google/knative-gcp/releases/download/v0.10.0/cloud-run-events.yaml
+kubectl apply --filename https://github.com/google/knative-gcp/releases/download/v0.11.0/cloud-run-events.yaml
 ```
 
 Open gcp-pubsub-source.yaml, update the sink urls with the service urls and apply the configuration
