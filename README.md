@@ -221,3 +221,9 @@ Run the following command, verify the output and type `yes` to exectute terrafor
 ```
 terraform apply
 ```
+
+### Helm
+
+```
+helm install watermark --dry-run ./watermark-chart --set externalIP=$SERVICE_IP --set keySecret=$(base64 key.json)
+```
