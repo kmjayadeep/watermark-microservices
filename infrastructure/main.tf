@@ -113,6 +113,12 @@ resource "null_resource" "install_knative" {
       kubectl apply --filename https://github.com/knative/serving/releases/download/v0.11.0/serving.yaml \
         --filename https://github.com/knative/eventing/releases/download/v0.11.0/release.yaml
 
+
+      kubectl apply --selector events.cloud.google.com/crd-install=true \
+        --filename https://github.com/google/knative-gcp/releases/download/v0.11.0/cloud-run-events.yaml
+
+      kubectl apply --filename https://github.com/google/knative-gcp/releases/download/v0.11.0/cloud-run-events.yaml
+
     EOT
   }
 
