@@ -26,6 +26,7 @@ if (process.env.NODE_ENV == 'development') {
 
 app.post('/', async (req, res) => {
   const event = req.body;
+  console.log('got event', event);
 
   const { ticketId, document } = event;
   
@@ -36,6 +37,7 @@ app.post('/', async (req, res) => {
     status: 'PENDING',
   }
 
+  console.log('publishing status event', pendingStatusEvent);
   await publishEvent('watermark-status', JSON.stringify(pendingStatusEvent));
 
   // Wait some time before publishing result
@@ -52,6 +54,7 @@ app.post('/', async (req, res) => {
     result,
   }
 
+  console.log('publishing status event', finishedStatusEvent);
   await publishEvent('watermark-status', JSON.stringify(finishedStatusEvent));
 
   res.send('Event accepted');

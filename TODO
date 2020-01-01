@@ -2,3 +2,4 @@ add scripts for dealing with service names when applying eventing yamls
 unit tests and comments
 consistancy of events
 replace console log with debug module
+scripts for iam, topic, document

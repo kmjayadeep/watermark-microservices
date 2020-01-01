@@ -27,6 +27,7 @@ app.get('/ping', (_, res) => {
 // route for handling events from knative
 app.post('/', async (req, res) => {
   const event = req.body;
+  console.log('got event', event);
   const { status, ticketId } = event;
   await updateStatusByTicketId(ticketId, status);
   res.send('Event Accepted');
