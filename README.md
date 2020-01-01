@@ -225,5 +225,6 @@ terraform apply
 ### Helm
 
 ```
+export SERVICE_IP=$(kubectl get svc istio-ingressgateway -n istio-system -o jsonpath="{.status.loadBalancer.ingress[0].ip}")
 helm install watermark --dry-run ./watermark-chart --set externalIP=$SERVICE_IP --set keySecret=$(base64 key.json)
 ```
