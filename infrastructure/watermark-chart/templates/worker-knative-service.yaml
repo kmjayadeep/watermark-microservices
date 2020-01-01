@@ -14,7 +14,7 @@ spec:
             - key: key.json 
               path: key.json
       containers:
-        - image: kmjayadeep/watermark-worker-service:0.1.8
+        - image: {{ .Values.services.worker }}
           env:
             - name: NODE_ENV
               value: development # Only for development

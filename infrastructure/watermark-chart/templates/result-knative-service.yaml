@@ -14,7 +14,7 @@ spec:
             - key: key.json 
               path: key.json
       containers:
-        - image: kmjayadeep/watermark-result-service:0.1.4
+        - image: {{ .Values.services.result }}
           env:
             - name: NODE_ENV
               value: development # Only for development
