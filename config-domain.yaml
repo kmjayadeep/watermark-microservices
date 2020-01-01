@@ -1,9 +1,0 @@
-apiVersion: v1
-data:
-  34.82.141.113.nip.io: ""
-kind: ConfigMap
-metadata:
-  labels:
-    serving.knative.dev/release: v0.10.0
-  name: config-domain
-  namespace: knative-serving

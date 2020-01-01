@@ -36,3 +36,4 @@ override.tf.json
 #kubernetes files
 ca.crt
 ci
+config-domain.yaml
