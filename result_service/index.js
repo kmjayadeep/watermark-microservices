@@ -47,13 +47,13 @@ app.post('/', async (req, res) => {
       return res.send('Ignoring event');
     }
     // Got event that watermark has finished
+    const { ticketId, result } = event;
 
     if (typeof ticketId == 'undefined' || ticketId == '') {
       console.log('Got invalid ticketid, ignoring request');
       return res.send('Invalid format');
     }
-
-    const { ticketId, result } = event;
+    
     await updateDocument(ticketId, {
       watermark: result.watermark
     });

@@ -1,0 +1,22 @@
+version: '3'
+services:
+  ticketing:
+    build: ticketing_service
+    image: kmjayadeep/watermark-ticketing-service:0.1.3
+    ports:
+      - "3000:3000"
+  status:
+    build: status_service
+    image: kmjayadeep/watermark-status-service:0.1.8
+    ports:
+      - "3000:3000"
+  worker:
+    build: worker_service
+    image: kmjayadeep/watermark-worker-service:0.1.10
+    ports:
+      - "3000:3000"
+  result:
+    build: result_service
+    image: kmjayadeep/watermark-result-service:0.1.7
+    ports:
+      - "3000:3000"
