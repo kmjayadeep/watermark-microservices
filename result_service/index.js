@@ -47,6 +47,12 @@ app.post('/', async (req, res) => {
       return res.send('Ignoring event');
     }
     // Got event that watermark has finished
+
+    if (typeof ticketId == 'undefined' || ticketId == '') {
+      console.log('Got invalid ticketid, ignoring request');
+      return res.send('Invalid format');
+    }
+
     const { ticketId, result } = event;
     await updateDocument(ticketId, {
       watermark: result.watermark
@@ -55,6 +61,18 @@ app.post('/', async (req, res) => {
   } else if (event.document) {
     // Got an event that a new document was added to queue
     const { ticketId, document } = event;
+
+    if (typeof ticketId === 'undefined' || ticketId === '') {
+      console.log('Got invalid ticketid, ignoring request');
+      return res.send('Invalid format');
+    }
+
+
+    if(typeof document !== 'object') {
+      console.log('Invalid document, ignoring request');
+      return res.send('invalid document format');
+    }
+
     await saveDocument(ticketId, {
       ...document,
       ticketId,

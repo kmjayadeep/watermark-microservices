@@ -43,6 +43,12 @@ app.post('/', async (req, res) => {
   const event = JSON.parse(rawBody);
   console.log('got event', event);
   const { status, ticketId } = event;
+
+  if (typeof ticketId == 'undefined' || ticketId == '') {
+    console.log('Got invalid ticketid, ignoring request');
+    return res.send('Invalid format');
+  }
+
   await updateStatusByTicketId(ticketId, status);
   res.send('Event Accepted');
 })

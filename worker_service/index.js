@@ -6,15 +6,15 @@ const { timerPromise } = require('./lib/timerPromise');
 
 const PORT = process.env.PORT || 3000;
 
-app.use(function(req, _, next) {
+app.use(function (req, _, next) {
   req.rawBody = '';
   req.setEncoding('utf8');
-  
-  req.on('data', function(chunk) { 
+
+  req.on('data', function (chunk) {
     req.rawBody += chunk;
   });
-  
-  req.on('end', function() {
+
+  req.on('end', function () {
     next();
   });
 });
@@ -43,7 +43,12 @@ app.post('/', async (req, res) => {
   console.log('got event', event);
 
   const { ticketId, document } = event;
-  
+
+  if (typeof ticketId == 'undefined' || ticketId == '') {
+    console.log('Got invalid ticketid, ignoring request');
+    return res.send('Invalid format');
+  }
+
   const watermark = 'WATERMARK : ' + JSON.stringify(document) + ' ' + Date.now();
 
   const pendingStatusEvent = {
