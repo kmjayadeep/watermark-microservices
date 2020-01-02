@@ -7,7 +7,12 @@ const { timerPromise } = require('./lib/timerPromise');
 const PORT = process.env.PORT || 3000;
 
 app.use(function (req, _, next) {
+  const contentType = req.header('content-type');
+  if (contentType !== 'application/octet-stream') {
+    return next();
+  }
   req.rawBody = '';
+
   req.setEncoding('utf8');
 
   req.on('data', function (chunk) {

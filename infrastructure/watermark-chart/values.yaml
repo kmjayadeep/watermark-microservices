@@ -3,6 +3,6 @@ keySecret: "credentials_here_base64"
 
 services:
     ticketing: kmjayadeep/watermark-ticketing-service:0.1.3
-    status: kmjayadeep/watermark-status-service:0.1.8
-    worker: kmjayadeep/watermark-worker-service:0.1.10
-    result: kmjayadeep/watermark-result-service:0.1.7
+    status: kmjayadeep/watermark-status-service:0.1.10
+    worker: kmjayadeep/watermark-worker-service:0.1.11
+    result: kmjayadeep/watermark-result-service:0.1.8

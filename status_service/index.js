@@ -7,15 +7,20 @@ const { updateStatusByTicketId } = require('./db/status');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.use(function(req, _, next) {
+app.use(function (req, _, next) {
+  const contentType = req.header('content-type');
+  if (contentType !== 'application/octet-stream') {
+    return next();
+  }
   req.rawBody = '';
+
   req.setEncoding('utf8');
-  
-  req.on('data', function(chunk) { 
+
+  req.on('data', function (chunk) {
     req.rawBody += chunk;
   });
-  
-  req.on('end', function() {
+
+  req.on('end', function () {
     next();
   });
 });
@@ -49,8 +54,14 @@ app.post('/', async (req, res) => {
     return res.send('Invalid format');
   }
 
-  await updateStatusByTicketId(ticketId, status);
-  res.send('Event Accepted');
+  try {
+    await updateStatusByTicketId(ticketId, status);
+    res.send('Event Accepted');
+  } catch (error) {
+    console.log(error);
+    res.status(400).send('Unable to process event');    
+  }
+
 })
 
 if (process.env.NODE_ENV == 'development') {

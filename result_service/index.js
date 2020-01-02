@@ -7,15 +7,21 @@ const { rootValue } = require('./graphql/rootValue');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.use(function(req, _, next) {
+// events are coming as octet stream
+app.use(function (req, _, next) {
+  const contentType = req.header('content-type');
+  if (contentType !== 'application/octet-stream') {
+    return next();
+  }
   req.rawBody = '';
+
   req.setEncoding('utf8');
-  
-  req.on('data', function(chunk) { 
+
+  req.on('data', function (chunk) {
     req.rawBody += chunk;
   });
-  
-  req.on('end', function() {
+
+  req.on('end', function () {
     next();
   });
 });
