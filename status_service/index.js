@@ -7,6 +7,19 @@ const { updateStatusByTicketId } = require('./db/status');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+app.use(function(req, _, next) {
+  req.rawBody = '';
+  req.setEncoding('utf8');
+  
+  req.on('data', function(chunk) { 
+    req.rawBody += chunk;
+  });
+  
+  req.on('end', function() {
+    next();
+  });
+});
+
 app.use(bodyParser.json());
 
 app.use('/graphql', express_graphql({
@@ -26,7 +39,8 @@ app.get('/ping', (_, res) => {
 
 // route for handling events from knative
 app.post('/', async (req, res) => {
-  const event = req.body;
+  const { rawBody } = req;
+  const event = JSON.parse(rawBody);
   console.log('got event', event);
   const { status, ticketId } = event;
   await updateStatusByTicketId(ticketId, status);

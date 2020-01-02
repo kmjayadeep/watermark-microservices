@@ -6,6 +6,19 @@ const { timerPromise } = require('./lib/timerPromise');
 
 const PORT = process.env.PORT || 3000;
 
+app.use(function(req, _, next) {
+  req.rawBody = '';
+  req.setEncoding('utf8');
+  
+  req.on('data', function(chunk) { 
+    req.rawBody += chunk;
+  });
+  
+  req.on('end', function() {
+    next();
+  });
+});
+
 app.use(bodyParser.json());
 
 app.get('/', (_, res) => {
@@ -25,7 +38,8 @@ if (process.env.NODE_ENV == 'development') {
 
 
 app.post('/', async (req, res) => {
-  const event = req.body;
+  const { rawBody } = req;
+  const event = JSON.parse(rawBody);
   console.log('got event', event);
 
   const { ticketId, document } = event;

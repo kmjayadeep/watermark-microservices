@@ -2,6 +2,6 @@ version: '3'
 services:
   web:
     build: .
-    image: kmjayadeep/watermark-result-service:0.1.4
+    image: kmjayadeep/watermark-result-service:0.1.5
     ports:
       - "3000:3000"
