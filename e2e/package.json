@@ -17,7 +17,7 @@
     "mocha": "^6.2.2",
     "mocha-allure-reporter": "^1.4.0",
     "mocha-logger": "^1.0.6",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^3.1.1",
     "allure-commandline": "^2.13.0"
   }
 }
